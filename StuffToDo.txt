@@ -1,0 +1,4 @@
+Add Getters and Setters
+Add Public/Private to all members
+Need to delete key and Rank??
+Warning on Node.java
