@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.concurrent.ThreadLocalRandom;
 
-//Add public private to members.
+//Add public/private to members.
 
 public class Random<K, V> extends AbstractAlgoCache<K,V> implements IAlgoCache<K,V> {
 	LinkedList<K> m_Cache;
