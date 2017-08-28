@@ -2,54 +2,56 @@ package com.hit.algorithms;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 //Add public/private to members.
 
 public class Random<K, V> extends AbstractAlgoCache<K,V> implements IAlgoCache<K,V> {
-	LinkedList<K> m_Cache;
-	HashMap<K,V> m_Mapping;
+	private List<K> cache;
+	private Map<K, V> mapping;
 	
-	public Random(int i_Capacity) 
+	public Random(int capacity)
 	{
-		super(i_Capacity);
-		m_Cache=new LinkedList<K>();
-		m_Mapping=new HashMap<K,V>();
+		super(capacity);
+		cache = new LinkedList<K>();
+		mapping = new HashMap<K,V>();
 	}
 
 	@Override
-	public V getElement(K io_Key) {
+	public V getElement(K key) {
 		
-		if(m_Cache.contains(io_Key))
+		if(cache.contains(key))
 		{
-			return m_Mapping.get(io_Key);
+			return mapping.get(key);
 		}	
 		return null;
 	}
 
 	@Override
-	public V putElement(K io_Key, V io_Value) {
+	public V putElement(K key, V value) {
 		Integer tempRandomIndexToRemove;
 		K tempKey;
-		if(!m_Cache.contains(io_Key)){
-			if(m_Cache.size()==m_Capacity)
+		if(!cache.contains(key)){
+			if(cache.size() == getCapacity())
 			{
-				tempRandomIndexToRemove=ThreadLocalRandom.current().nextInt(0,m_Capacity);
-				tempKey=m_Cache.get(tempRandomIndexToRemove);
-				m_Mapping.remove(tempKey);
-				m_Cache.remove(tempKey);
+				tempRandomIndexToRemove=ThreadLocalRandom.current().nextInt(0, getCapacity());
+				tempKey= cache.get(tempRandomIndexToRemove);
+				mapping.remove(tempKey);
+				cache.remove(tempKey);
 			}
 			
-			m_Mapping.put(io_Key, io_Value);
-			m_Cache.add(io_Key);
+			mapping.put(key, value);
+			cache.add(key);
 		}
-		return io_Value;
+		return value;
 	}
 
 	@Override
-	public void removeElement(K io_Key) {
-		m_Mapping.remove(io_Key);
-		m_Cache.remove(io_Key);	
+	public void removeElement(K key) {
+		mapping.remove(key);
+		cache.remove(key);
 	}
 
 }

@@ -2,16 +2,18 @@ package com.hit.algorithms;
 
 public abstract class AbstractAlgoCache<K,V> implements IAlgoCache<K,V>  {
 	
-	protected final int m_Capacity;
+	private final int capacity;
 	
-	public AbstractAlgoCache(int i_Capacity)
+	public AbstractAlgoCache(int capacity)
 	{
-		m_Capacity=i_Capacity;
-	}	
+		this.capacity = capacity;
+	}
+
+
 	
 	public int getCapacity()
 	{
-		return m_Capacity;
+		return capacity;
 	}
 }
 

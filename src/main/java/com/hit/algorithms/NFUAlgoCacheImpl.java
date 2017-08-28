@@ -1,31 +1,28 @@
 package com.hit.algorithms;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-
+import java.util.*;
 
 
 public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> implements IAlgoCache<K,V>  {
 	
-	LinkedList<Node<K>> m_CacheList;
-	HashMap<K,V> m_Mapping;
+	private List<Node<K>> cache;
+	private Map<K, V> mapping;
 	
-	NFUAlgoCacheImpl(int io_Capacity){
-		super(io_Capacity);
-		m_CacheList=new LinkedList<Node<K>>();
-		m_Mapping=new HashMap<K,V>();
+	NFUAlgoCacheImpl(int capacity){
+		super(capacity);
+		cache = new LinkedList<Node<K>>();
+		mapping = new HashMap<K,V>();
 	}
 
 	@Override
-	public V getElement(K io_Key) 
+	public V getElement(K key)
 	{
-		if(m_CacheList.contains(new Node<K>(io_Key)))
+		if(cache.contains(new Node<K>(key)))
 		{	
-			m_CacheList.get(m_CacheList.indexOf(new Node<K>(io_Key))).addRank();
+			cache.get(cache.indexOf(new Node<K>(key))).addRank();
 			reOrderCacheList();
 			
-			return m_Mapping.get(io_Key);
+			return mapping.get(key);
 		}
 		else
 		{
@@ -34,29 +31,29 @@ public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> implements IAl
 	}
 
 	@Override
-	public V putElement(K io_Key, V io_Value) {
-		if(!m_CacheList.contains(new Node<K>(io_Key)))
+	public V putElement(K key, V value) {
+		if(!cache.contains(new Node<K>(key)))
 		{
-			if(m_CacheList.size()==m_Capacity)
+			if(cache.size() == getCapacity())
 			{
-				m_Mapping.remove(m_CacheList.getFirst().getKey());
-				m_CacheList.removeFirst();
+				mapping.remove(cache.get(0).getKey());
+				cache.remove(0);
 			}
-			m_Mapping.put(io_Key, io_Value);
-			m_CacheList.add(new Node<K>(io_Key));
+			mapping.put(key, value);
+			cache.add(new Node<K>(key));
 		}
-		return io_Value;
+		return value;
 	}
 
 	@Override
-	public void removeElement(K io_Key) {
-		m_Mapping.remove(io_Key);
-		m_CacheList.remove(m_CacheList.indexOf(new Node<K>(io_Key)));
+	public void removeElement(K key) {
+		mapping.remove(key);
+		cache.remove(cache.indexOf(new Node<K>(key)));
 	}
 	
 	public void reOrderCacheList()
 	{
-		Collections.sort(m_CacheList);
+		Collections.sort(cache);
 	}
 
 }

@@ -4,28 +4,31 @@ package com.hit.algorithms;
 
 public class KeyAndRank<K> implements Comparable<KeyAndRank<K>> {
 	
-	private final K m_Key;
-	private int m_Rank;
+	private final K key;
+	private int rank;
 	
-	public KeyAndRank(K io_Key)
+	public KeyAndRank(K key)
 	{
-		m_Key=io_Key;
-		m_Rank=0;
+		this.key = key;
+		setRank(0);
 	}
 
-	
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
+
 	public K getKey() {
-		return m_Key;
+		return key;
 	}
 
 	public int getRank()
 	{
-		return m_Rank;
+		return rank;
 	}
 	
 	public void addRank()
 	{
-		m_Rank++;
+		rank++;
 	}
 	
 	
