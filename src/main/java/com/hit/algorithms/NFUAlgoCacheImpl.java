@@ -15,7 +15,10 @@ public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> {
 		initCounters();
 	}
 
-	//TODO: added notes in StuffToDo.txt, you should look there.
+	/**
+	 *
+	 * @see IAlgoCache#getElement(K)
+	 */
 	@Override
 	public V getElement(K key)
 	{
@@ -30,6 +33,10 @@ public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> {
 		return null;
 	}
 
+	/**
+	 *
+	 * @see IAlgoCache#putElement(K, V)
+	 */
 	@Override
 	public V putElement(K key, V value) {
 		V elementReturn = null;
@@ -49,6 +56,10 @@ public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> {
 		return elementReturn;
 	}
 
+	/**
+	 *
+	 * @see IAlgoCache#removeElement(K)
+	 */
 	@Override
 	public void removeElement(K key) {
 		if (cache.containsKey(key) && counters.containsKey(key)) {
@@ -56,7 +67,7 @@ public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> {
 			counters.remove(key);
 		}
 	}
-	
+
 	//initialize the counters to 0 using lambda expression
 	private void initCounters() {
 		counters.forEach((k, v) -> v = 0);
