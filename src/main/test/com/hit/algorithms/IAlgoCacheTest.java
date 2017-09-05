@@ -72,6 +72,7 @@ public class IAlgoCacheTest {
 	@Test
 	public void testRandom()
 	{
+		//TODO need to fix bugs in lines that marked as comments
 		Integer[] keyList=new Integer[] {1,2,3,4,5};
 		String[] valueList=new String[] {"aa","bb","cv","dd","de"};
 		int intToCheck=4;
