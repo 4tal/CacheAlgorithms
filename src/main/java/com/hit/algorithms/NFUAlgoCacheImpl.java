@@ -19,48 +19,64 @@ public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> implements IAl
 	@Override
 	public V getElement(K key)
 	{
-		if(cache.contains(new Node<K>(key)))
-		{	
-			cache.get(cache.indexOf(new Node<K>(key))).addRank();
-			reOrderCacheList();
-			
-			return mapping.get(key);
+		//check if the key is exist in cache and in the counters map. then increment its counter and return it
+		if (cache.containsKey(key) && counters.containsKey(key)) {
+			int incrementedCounter = counters.get(key).intValue() + 1;
+			counters.replace(key, incrementedCounter);
+
+			return cache.get(key);
 		}
-		else
-		{
-			return null;
-		}
+
+		return null;
 	}
 
 	@Override
 	public V putElement(K key, V value) {
-		if(!cache.contains(new Node<K>(key)))
-		{
-			if(cache.size() == getCapacity())
-			{
-				mapping.remove(cache.get(0).getKey());
-				cache.remove(0);
+		V elementReturn = null;
+		//if cache is full remove the element with the lowest counter then put the new element and return the removed element
+		if (cache.size() == this.getCapacity()) {
+			K lowestKey = findKeyWithLowestCounter();
+
+			if (lowestKey != null && cache.containsKey(lowestKey) && counters.containsKey(lowestKey)) {
+				elementReturn = cache.remove(lowestKey);
+				counters.remove(lowestKey);
 			}
-			mapping.put(key, value);
-			cache.add(new Node<K>(key));
 		}
-		return value;
+
+		cache.put(key, value);
+		counters.put(key, 0);
+
+		return elementReturn;
 	}
 
 	@Override
 	public void removeElement(K key) {
-		mapping.remove(key);
-		cache.remove(cache.indexOf(new Node<K>(key)));
+		if (cache.containsKey(key) && counters.containsKey(key)) {
+			cache.remove(key);
+			counters.remove(key);
+		}
 	}
 	
-	public void reOrderCacheList()
-	{
-		Collections.sort(cache);
-	}
-
 	//initialize the counters to 0 using lambda expression
 	private void initCounters() {
 		counters.forEach((k, v) -> v = 0);
+	}
+
+	private K findKeyWithLowestCounter() {
+		Iterator iterator = counters.entrySet().iterator();
+		int minCounter = counters.entrySet().iterator().next().getValue();
+		K keyLowestCounter = null;
+
+		while (iterator.hasNext()) {
+			Map.Entry<K, Integer> pair = (Map.Entry) iterator.next();
+
+			if (minCounter > pair.getValue()) {
+				minCounter = pair.getValue();
+				keyLowestCounter = pair.getKey();
+			}
+		}
+
+		return keyLowestCounter;
 	}
 
 }
