@@ -2,3 +2,8 @@ Add Getters and Setters
 Add Public/Private to all members
 Need to delete key and Rank??
 Warning on Node.java
+
+To idan:
+1. I didn't understand the NFU idea, when to change the counters.
+I changed how it stores the counters, we have 2 Maps: Map<k, V> and Map<K, Integer>
+the second Map stores the counters by the Key(page id).

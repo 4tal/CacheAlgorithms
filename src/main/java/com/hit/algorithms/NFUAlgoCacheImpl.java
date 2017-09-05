@@ -5,15 +5,17 @@ import java.util.*;
 
 public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> implements IAlgoCache<K,V>  {
 	
-	private List<Node<K>> cache;
-	private Map<K, V> mapping;
+	private Map<K, V> cache;
+	private Map<K, Integer> counters;
 	
 	NFUAlgoCacheImpl(int capacity){
 		super(capacity);
-		cache = new LinkedList<Node<K>>();
-		mapping = new HashMap<K,V>();
+		cache = new LinkedHashMap<>(capacity);
+		counters = new LinkedHashMap<>(capacity);
+		initCounters();
 	}
 
+	//TODO: added notes in StuffToDo.txt, you should look there.
 	@Override
 	public V getElement(K key)
 	{
@@ -54,6 +56,11 @@ public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> implements IAl
 	public void reOrderCacheList()
 	{
 		Collections.sort(cache);
+	}
+
+	//initialize the counters to 0 using lambda expression
+	private void initCounters() {
+		counters.forEach((k, v) -> v = 0);
 	}
 
 }
