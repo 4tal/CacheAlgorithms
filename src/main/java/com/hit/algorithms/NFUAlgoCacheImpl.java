@@ -3,7 +3,7 @@ package com.hit.algorithms;
 import java.util.*;
 
 
-public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> implements IAlgoCache<K,V>  {
+public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> {
 	
 	private Map<K, V> cache;
 	private Map<K, Integer> counters;
