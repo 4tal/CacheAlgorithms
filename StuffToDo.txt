@@ -7,6 +7,7 @@ To idan:
 1. NFU fixed
 2. Random fixed
 3. LRU fixed
+4. JUnit Test for algorithms should be fixed(rewrite)
 =============================================
 please check and tell your opinion about it |
                                             |
