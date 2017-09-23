@@ -44,6 +44,7 @@ public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> {
 		V elementReturn = null;
 		if (cache.size() == this.getCapacity()) {
 			K lowestKey = findKeyWithLowestCounter();
+			elementReturn=this.cache.get(lowestKey);
 			this.removeElement(lowestKey);
 		}
 		cache.put(key, value);
