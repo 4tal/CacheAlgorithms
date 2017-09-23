@@ -8,7 +8,7 @@ public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> {
 	private Map<K, V> cache;
 	private Map<K, Integer> counters;
 	
-	NFUAlgoCacheImpl(int capacity){
+	public NFUAlgoCacheImpl(int capacity){
 		super(capacity);
 		cache = new LinkedHashMap<>(capacity);
 		counters = new LinkedHashMap<>(capacity);
