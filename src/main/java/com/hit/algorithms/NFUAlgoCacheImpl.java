@@ -59,6 +59,7 @@ public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> {
 	public void removeElement(K key){
 		cache.remove(key);
 		counters.remove(key);
+		//Comment
 		
 	}
 
