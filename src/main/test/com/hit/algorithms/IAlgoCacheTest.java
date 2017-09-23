@@ -17,7 +17,7 @@ public class IAlgoCacheTest {
 	
 		//Check putElement Function.
 		testerNFU.putElement(keyList[0], valueList[0]);
-//		assertEquals(testerNFU.mapping.get(keyList[0]),valueList[0]);
+
 		
 		//Fill the map:
 		testerNFU.putElement(keyList[1], valueList[1]);
@@ -26,16 +26,11 @@ public class IAlgoCacheTest {
 		testerNFU.putElement(keyList[4], valueList[4]);
 		
 		//Check Auto-Remove:
-//		assertEquals(testerNFU.m_CacheList.size(),intToCheck);
-		
-		//Check element not in the list
-		assertEquals(testerNFU.getElement(keyList[0]),null);
+		assertEquals(testerNFU.getCacheSize(),intToCheck);
 	
+		
 		//Check getElement:
 		assertEquals(testerNFU.getElement(keyList[2]),"cv");
-		
-		//Check reOrder (The rank change so it need to move to last.
-//		assertEquals(testerNFU.m_CacheList.getLast().getRank(),1);
 	}
 
 	@Test

@@ -26,11 +26,13 @@ public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> {
 		if (cache.containsKey(key) && counters.containsKey(key)) {
 			int incrementedCounter = counters.get(key).intValue() + 1;
 			counters.replace(key, incrementedCounter);
-
 			return cache.get(key);
 		}
 
 		return null;
+	}
+	public int getCacheSize(){
+		return cache.size();
 	}
 
 	/**
@@ -40,19 +42,12 @@ public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> {
 	@Override
 	public V putElement(K key, V value) {
 		V elementReturn = null;
-		//if cache is full remove the element with the lowest counter then put the new element and return the removed element
 		if (cache.size() == this.getCapacity()) {
 			K lowestKey = findKeyWithLowestCounter();
-
-			if (lowestKey != null && cache.containsKey(lowestKey) && counters.containsKey(lowestKey)) {
-				elementReturn = cache.remove(lowestKey);
-				counters.remove(lowestKey);
-			}
+			this.removeElement(lowestKey);
 		}
-
 		cache.put(key, value);
 		counters.put(key, 0);
-
 		return elementReturn;
 	}
 
@@ -61,11 +56,10 @@ public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> {
 	 * @see IAlgoCache#removeElement(K)
 	 */
 	@Override
-	public void removeElement(K key) {
-		if (cache.containsKey(key) && counters.containsKey(key)) {
-			cache.remove(key);
-			counters.remove(key);
-		}
+	public void removeElement(K key){
+		cache.remove(key);
+		counters.remove(key);
+		
 	}
 
 	//initialize the counters to 0 using lambda expression
@@ -74,20 +68,15 @@ public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> {
 	}
 
 	private K findKeyWithLowestCounter() {
-		Iterator iterator = counters.entrySet().iterator();
-		int minCounter = counters.entrySet().iterator().next().getValue();
-		K keyLowestCounter = null;
+		Integer minValue=1000;
+		K lowestKey=null;
 
-		while (iterator.hasNext()) {
-			Map.Entry<K, Integer> pair = (Map.Entry) iterator.next();
-
-			if (minCounter > pair.getValue()) {
-				minCounter = pair.getValue();
-				keyLowestCounter = pair.getKey();
-			}
+		for (K key : counters.keySet()) {
+		    if(counters.get(key)<minValue){
+		    	lowestKey=key;	
+		    }
 		}
-
-		return keyLowestCounter;
+		return lowestKey;
 	}
 
 }
