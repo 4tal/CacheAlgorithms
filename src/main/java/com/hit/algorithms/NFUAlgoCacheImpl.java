@@ -31,6 +31,7 @@ public class NFUAlgoCacheImpl<K,V> extends AbstractAlgoCache<K,V> {
 
 		return null;
 	}
+
 	public int getCacheSize(){
 		return cache.size();
 	}

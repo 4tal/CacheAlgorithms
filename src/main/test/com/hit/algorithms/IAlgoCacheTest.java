@@ -73,7 +73,7 @@ public class IAlgoCacheTest {
 		int intToCheck=4;
 	
 		//Create Tester
-		Random<Integer,String> testerRan=new Random<Integer,String>(intToCheck);
+		RandomAlgoCacheImpl<Integer,String> testerRan=new RandomAlgoCacheImpl<Integer,String>(intToCheck);
 		assertEquals(testerRan.getCapacity(),intToCheck);
 	
 		//Check putElement Function.
